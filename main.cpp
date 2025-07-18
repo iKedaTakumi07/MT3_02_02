@@ -26,6 +26,11 @@ struct Plane {
     float distance;
 };
 
+float Dot(const Vector3& v1, const Vector3& v2)
+{
+    float num;
+    return num = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
 Vector3 add(const Vector3& v1, const Vector3& v2)
 {
     Vector3 num;
@@ -358,9 +363,9 @@ void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const 
 bool IsCollison(const Sphere& s1, const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix)
 {
     // 2つの球体の中心点の距離を求める
-    Vector3 num = { s1.center.x - plane.normal.x, s1.center.y - plane.normal.y, s1.center.z - plane.normal.z };
+    float distance = Dot(s1.center, plane.normal) - plane.distance;
 
-    float distance = Length(num);
+    distance = fabsf(distance);
     // 半径の合計よりも小さければ衝突
     if (distance <= s1.radius) {
 
